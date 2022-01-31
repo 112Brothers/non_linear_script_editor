@@ -10,7 +10,8 @@ var mouseD = false;
 var trp=false;
 var ipr;
 var scripts = [{name:'start',text:'',x:5,y:10,ref:[]}];
-
+var ttt = localStorage.getItem('script');
+if(ttt!=undefined) scripts=ttt;
 
 function new_script(predel)
 {
@@ -19,6 +20,7 @@ if(!sname) return;
 var ref = scripts.length;
 predel.ref	.push(ref);
 scripts.push({name:sname,x:predel.x+12,y:predel.y,ref:[]});
+localStorage.setItem('script',scripts);
 }
 
 canv.onmousedown = function(e) {mouseD=true;predmx=e.clientX/sq;predmy=e.clientY/sq;
@@ -39,6 +41,8 @@ if(!trp) return;
 scripts[ipr].x+=mx-predmx;
 scripts[ipr].y+=my-predmy;
 predmx=mx;predmy=my;
+ 
+localStorage.setItem('script',scripts);
 };
 
 canv.onclick=function(e)
@@ -51,6 +55,8 @@ for(var i=0;i<scripts.length;i++)
   console.log("name:"+el.name+", "+mx+'=mx,my='+my+',el.x='+(el.x+9)*1+',el.y='+1*(el.y+1));
   if(mx>=(el.x+9)&&mx<=(el.x+10-0)&&my>=(el.y+1-0)&&my<=(el.y+2-0)) return new_script(el);
  }
+ 
+localStorage.setItem('script',scripts);
 };
 canv.ondblclick=function(e){
 let mx=e.clientX/sq-scx;
@@ -60,6 +66,8 @@ for(var i=0;i<scripts.length;i++)
 let el = scripts[i];
   if(predmx>=el.x&&predmx<=el.x+10&&predmy>=el.y&&predmy<=el.y+3) {el.text=prompt("Script",el.text);return;}	
 }
+ 
+localStorage.setItem('script',scripts);
 };
 
 document.body.onkeydown=function(e){
